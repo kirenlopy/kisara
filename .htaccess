@@ -1,0 +1,36 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^.git/.*$ - [R=404,L]
+RewriteRule ^vendor/.*$ - [R=404,L]
+RewriteRule ^protected/(.+)php*$ - [R=404,L]
+RewriteRule ^composer.json$ - [R=404,L]
+RewriteRule ^composer.lock$ - [R=404,L]
+RewriteRule ^.env$ - [R=404,L]
+RewriteRule ^index\.php$ - [L]
+RewriteRule favicon\.ico - [L]
+
+RewriteCond %{HTTP_HOST} ^www\.
+RewriteCond %{REQUEST_URI} !^/upload(.*)
+RewriteCond %{REQUEST_URI} !^/mobileapp/(.*)
+RewriteCond %{REQUEST_URI} !^/pointsprogram/(.*)
+RewriteCond %{REQUEST_URI} !^/merchantapp/(.*)
+RewriteCond %{REQUEST_URI} !^/assets(.*)
+RewriteCond %{REQUEST_URI} !^/addresses(.*)
+#RewriteRule ^(.*)$ http://live.flyereats.in/$1 [R=301,NC,L]
+
+RewriteCond %{HTTPS} off
+RewriteCond %{REQUEST_URI} !^/upload(.*)
+RewriteCond %{REQUEST_URI} !^/mobileapp/(.*)
+RewriteCond %{REQUEST_URI} !^/pointsprogram/(.*)
+RewriteCond %{REQUEST_URI} !^/merchantapp/(.*)
+RewriteCond %{REQUEST_URI} !^/driver/api/(.*)
+RewriteCond %{REQUEST_URI} !^/assets(.*)
+RewriteCond %{REQUEST_URI} !^/addresses(.*)
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+RewriteCond %{REQUEST_URI} !(\.css|\.js|\.png|\.jpg|\.jpeg|\.gif)$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !=/server-status
+RewriteRule . /index.php [L]

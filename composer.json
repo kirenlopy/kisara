@@ -1,0 +1,11 @@
+{
+  "require": {
+    "kerox/fcm": "2.3.0",
+    "spatie/image-optimizer": "1.4.0",
+    "google/auth": "^1.15",
+    "touskar/php-socket-io-event-emitter": "dev-master",
+    "mikehaertl/phpwkhtmltopdf": "2.5.0",
+    "foodette/yii1-dotenv": "*",
+    "guzzlehttp/guzzle": "^7.3"
+  }
+}

@@ -1,0 +1,46 @@
+version: '3'
+services:
+  app:
+    image: imanilchaudhari/docker-ubuntu:20.04
+    restart: 'no'
+    ports:
+      - '${APP_PORT}:80'
+    volumes:
+      - './:/var/www/html/'
+      - './docker/app/app.conf:/etc/apache2/sites-available/000-default.conf'
+      - './docker/php/php.ini:/etc/php/7.4/apache2/php.ini'
+      - './docker/php/php.ini:/etc/php/7.4/cli/php.ini'
+    links:
+      - mariadb
+      - mailhog
+  mariadb:
+    image: 'mariadb:10.3.28'
+    restart: 'no'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'database'
+  adminer:
+    image: adminer
+    restart: 'no'
+    links:
+      - mariadb
+    ports:
+      - '${ADM_PORT}:8080'
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: 'no'
+    links:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    ports:
+      - '${PMA_PORT}:80'
+    volumes:
+      - /sessions
+  mailhog:
+    image: mailhog/mailhog
+    restart: 'no'
+    ports:
+      - '${MHS_PORT}:1025'
+      - '${MHW_PORT}:8025'
